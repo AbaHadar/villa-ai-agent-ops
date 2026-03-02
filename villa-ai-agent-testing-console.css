@@ -1,0 +1,181 @@
+/* ===========================================
+   VILLA AI AGENT — DARK OPS CONSOLE
+   =========================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0b0c10;
+  color: #e9ecf1;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+
+/* Layout */
+
+.wrap {
+  max-width: 1500px;
+  margin: 60px auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  gap: 48px;
+}
+
+@media (max-width: 1100px) {
+  .wrap { grid-template-columns: 1fr; }
+}
+
+/* Panels */
+
+.panel {
+  background: #111218;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+
+/* Headings */
+
+h2 {
+  font-size: 13px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .6;
+  margin-bottom: 18px;
+}
+
+/* Inputs */
+
+textarea,
+input {
+  width: 100%;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: #0f1117;
+  color: white;
+  margin-bottom: 22px;
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+/* Buttons */
+
+.button-row {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: #1a1c24;
+  color: white;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: .2s ease;
+  font-size: 13px;
+}
+
+button:hover {
+  border-color: #caa56a;
+}
+
+button.primary {
+  border-color: #caa56a;
+}
+
+/* Status */
+
+.status {
+  font-size: 13px;
+  opacity: .6;
+}
+
+/* Guest Output */
+
+.guest {
+  min-height: 260px;
+  padding: 24px;
+  background: #0f1117;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 15px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+/* CTA */
+
+.cta-container {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.cta-container a {
+  display: inline-block;
+  margin-right: 14px;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  text-decoration: none;
+  color: white;
+  font-size: 13px;
+  transition: .2s ease;
+}
+
+.cta-container a:hover {
+  border-color: #caa56a;
+}
+
+/* Meta Grid */
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.meta-card {
+  background: #0f1117;
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px;
+}
+
+.meta-card .k {
+  opacity: .5;
+  margin-bottom: 6px;
+}
+
+.meta-card .v {
+  font-weight: 600;
+  word-break: break-word;
+}
+
+/* Raw SSE */
+
+.raw {
+  min-height: 200px;
+  padding: 16px;
+  background: #0f1117;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+  opacity: .6;
+}

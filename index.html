@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Villa AI Agent — Testing Dashboard</title>
+
+<link rel="stylesheet" href="villa-ai-agent-testing-console.css">
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <!-- LEFT COLUMN -->
+  <div class="panel controls">
+
+    <h2>Controls</h2>
+
+    <input id="endpoint" type="text"
+      value="https://vv-ai-concierge.netlify.app/.netlify/functions/ask">
+
+    <textarea id="q">
+We are considering Villa Valentín for a 40-person wedding weekend. Can you tell me what hosting events there is like?
+    </textarea>
+
+    <div class="button-row">
+      <button id="runBtn" class="primary">Run</button>
+      <button id="stopBtn">Stop</button>
+      <button id="clearBtn">Clear</button>
+    </div>
+
+    <div id="statusText" class="status">Idle</div>
+
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="panel output">
+
+    <h2>Guest View</h2>
+    <div id="guestOut" class="guest">(waiting...)</div>
+
+    <div id="ctaContainer" class="cta-container"></div>
+
+    <h2>Meta</h2>
+    <div id="metaGrid" class="meta-grid"></div>
+
+    <h2>Raw SSE</h2>
+    <div id="rawOut" class="raw">(no events yet)</div>
+
+  </div>
+
+</div>
+
+<script src="villa-ai-agent-testing-harness.js"></script>
+</body>
+</html>
