@@ -3,16 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Villa AI Agent — Testing Dashboard</title>
+<title>Villa AI Concierge — Operations Console</title>
 
 <link rel="stylesheet" href="villa-ai-agent-testing-console.css">
 </head>
 
 <body>
 
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-title">Villa Valentín</div>
+    <div class="brand-sub">AI Concierge Operations Console</div>
+  </div>
+
+  <div class="status-indicator">
+    <span class="dot"></span>
+    <span>Production Connected</span>
+    <span class="version">v1.0.0</span>
+  </div>
+</header>
+
 <div class="wrap">
 
-  <!-- LEFT COLUMN -->
   <div class="panel controls">
 
     <h2>Controls</h2>
@@ -34,7 +46,6 @@ We are considering Villa Valentín for a 40-person wedding weekend. Can you tell
 
   </div>
 
-  <!-- RIGHT COLUMN -->
   <div class="panel output">
 
     <h2>Guest View</h2>
@@ -45,8 +56,8 @@ We are considering Villa Valentín for a 40-person wedding weekend. Can you tell
     <h2>Meta</h2>
     <div id="metaGrid" class="meta-grid"></div>
 
-    <h2>Raw SSE</h2>
-    <div id="rawOut" class="raw">(no events yet)</div>
+    <h2 class="collapsible">Raw SSE (Diagnostics)</h2>
+    <div id="rawOut" class="raw collapsed">(no events yet)</div>
 
   </div>
 

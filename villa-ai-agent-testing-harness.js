@@ -162,4 +162,9 @@ $("runBtn").onclick = run;
 $("stopBtn").onclick = stop;
 $("clearBtn").onclick = clearAll;
 
+document.querySelector(".collapsible").addEventListener("click", ()=>{
+  const raw = document.getElementById("rawOut");
+  raw.classList.toggle("collapsed");
+});
+
 })();
