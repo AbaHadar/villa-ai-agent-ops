@@ -82,7 +82,6 @@
     a.rel = "noopener noreferrer";
     a.textContent = cta.label || cta.type || "CTA";
 
-    // subtle type label
     const small = document.createElement("span");
     small.className = "ctaType";
     small.textContent = cta.type ? ` (${cta.type})` : "";
@@ -114,7 +113,11 @@
     setStatus("Idle");
   }
 
-  function stop() {
+  /**
+   * stop({ keepStatus: true }) will NOT overwrite the current status text.
+   * This prevents "Done" from being immediately replaced by "Stopped".
+   */
+  function stop(opts = {}) {
     if (state.controller) {
       try {
         state.controller.abort();
@@ -123,7 +126,8 @@
     state.controller = null;
     state.running = false;
     setButtons();
-    setStatus("Stopped");
+
+    if (!opts.keepStatus) setStatus("Stopped");
   }
 
   async function run() {
@@ -160,7 +164,7 @@
         appendRaw(`HTTP ${res.status}`);
         appendRaw(txt || "(no body)");
         setStatus(`Fetch error (HTTP ${res.status})`);
-        stop();
+        stop({ keepStatus: true });
         return;
       }
 
@@ -170,7 +174,7 @@
         appendRaw("Non-SSE response:");
         appendRaw(txt || "(no body)");
         setStatus("Fetch error (not SSE)");
-        stop();
+        stop({ keepStatus: true });
         return;
       }
 
@@ -214,7 +218,6 @@
         }
 
         if (eventName === "meta" && payload) {
-          // append meta fields without nuking the earlier start block
           if (typeof payload.confidence !== "undefined") addMetaCard("confidence", payload.confidence);
           if (typeof payload.best_score !== "undefined") addMetaCard("best_score", payload.best_score);
           if (typeof payload.ownership_mode !== "undefined") addMetaCard("ownership_mode", String(!!payload.ownership_mode));
@@ -226,12 +229,14 @@
         }
 
         if (eventName === "error") {
-          setStatus("Server error");
+          const msg = payload?.message ? String(payload.message) : "Server error";
+          setStatus(`Server error: ${msg}`);
+          // Do NOT force stop here; some implementations still send done after error.
         }
 
         if (eventName === "done") {
           setStatus("Done");
-          stop();
+          stop({ keepStatus: true }); // <- critical fix
         }
 
         currentEvent = "";
@@ -250,7 +255,6 @@
           const frame = buffer.slice(0, idx);
           buffer = buffer.slice(idx + 2);
 
-          // Parse lines inside a frame
           const lines = frame.split("\n");
           for (const line of lines) {
             const l = line.replace(/\r$/, "");
@@ -264,12 +268,12 @@
       // stream ended without done
       if (state.running) {
         setStatus("Stream ended");
-        stop();
+        stop({ keepStatus: true });
       }
     } catch (err) {
       appendRaw(String(err?.message || err));
       setStatus("Fetch error");
-      stop();
+      stop({ keepStatus: true });
     }
   }
 
@@ -277,13 +281,12 @@
     if (!els.runBtn || !els.stopBtn || !els.clearBtn) return;
 
     els.runBtn.addEventListener("click", run);
-    els.stopBtn.addEventListener("click", stop);
+    els.stopBtn.addEventListener("click", () => stop()); // user intent: show "Stopped"
     els.clearBtn.addEventListener("click", clearAll);
 
     setButtons();
     setStatus("Idle");
 
-    // Optional: collapse/expand Raw SSE if you have a .collapsible element in HTML
     const collapsible = document.querySelector(".collapsible");
     if (collapsible && els.rawOut) {
       collapsible.addEventListener("click", () => {

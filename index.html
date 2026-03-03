@@ -4,79 +4,97 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Villa AI Concierge — Operations Console</title>
-
 <link rel="stylesheet" href="villa-ai-agent-testing-console.css">
 </head>
-
 <body>
 
 <header class="topbar">
-  <div class="brand">
-    <div class="brand-title">Villa Valentín</div>
-    <div class="brand-sub">AI Concierge Operations Console</div>
-  </div>
+  <div class="topbar-inner">
+    <div class="brand">
+      <h1>Villa Valentín</h1>
+      <h2>AI Concierge Operations Console</h2>
+    </div>
 
-  <div class="status-indicator">
-    <span class="dot"></span>
-    <span>Production Connected</span>
-    <span class="version">v1.0.0</span>
+    <div class="pill">
+      <div class="dot"></div>
+      <div class="label">Production Connected · v1.0.0</div>
+    </div>
   </div>
 </header>
 
 <div class="wrap">
 
-  <!-- CONTROLS PANEL -->
-  <section class="panel">
+  <div class="grid">
 
-    <h2>Controls</h2>
-
-    <div class="controls-grid">
-
-      <div class="field">
-        <label>Endpoint</label>
-        <input id="endpoint" type="text"
-          value="https://vv-ai-concierge.netlify.app/.netlify/functions/ask">
+    <!-- LEFT: CONTROLS -->
+    <div class="card">
+      <div class="card-hd">
+        <h3>Controls</h3>
       </div>
+      <div class="card-bd">
 
-      <div class="field">
-        <label>Prompt</label>
-        <textarea id="q" rows="5">
+        <div class="field">
+          <label>Endpoint</label>
+          <input id="endpoint" class="input"
+            value="https://vv-ai-concierge.netlify.app/.netlify/functions/ask">
+        </div>
+
+        <div class="field">
+          <label>Prompt</label>
+          <textarea id="q" class="textarea">
 We are considering Villa Valentín for a 40-person wedding weekend. Can you tell me what hosting events there is like?
-        </textarea>
+          </textarea>
+        </div>
+
+        <div class="row">
+          <button id="runBtn" class="btn primary">Run</button>
+          <button id="stopBtn" class="btn ghost">Stop</button>
+          <button id="clearBtn" class="btn">Clear</button>
+        </div>
+
+        <div id="statusText" class="status">Idle</div>
+
       </div>
-
-      <div class="buttons">
-        <button id="runBtn" class="btn primary">Run</button>
-        <button id="stopBtn" class="btn">Stop</button>
-        <button id="clearBtn" class="btn">Clear</button>
-      </div>
-
-      <div id="statusText" class="status">Idle</div>
-
     </div>
 
-  </section>
 
+    <!-- RIGHT: OUTPUT -->
+    <div class="card">
 
-  <!-- OUTPUT PANEL -->
-  <section class="panel">
+      <div class="card-hd">
+        <h3>Guest View</h3>
+      </div>
 
-    <h2>Guest View</h2>
-    <div id="guestOut" class="guest">(waiting...)</div>
+      <div class="card-bd">
 
-    <div id="ctaContainer" class="cta-container"></div>
+        <div class="section">
+          <div class="outbox">
+            <div id="guestOut" class="out">(waiting...)</div>
+          </div>
+        </div>
 
-    <h2>Meta</h2>
-    <div id="metaGrid" class="meta-grid"></div>
+        <div id="ctaContainer" class="section"></div>
 
-    <h2 class="collapsible">Raw SSE (Diagnostics)</h2>
-    <div id="rawOut" class="raw collapsed">(no events yet)</div>
+        <div class="section">
+          <h4>Meta</h4>
+          <div id="metaGrid" class="meta"></div>
+        </div>
 
-  </section>
+        <div class="outbox">
+          <div class="collapsible">
+            <div class="title">Raw SSE (Diagnostics)</div>
+            <div class="chev">⌄</div>
+          </div>
+          <div id="rawOut" class="raw collapsed">(no events yet)</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 
 </div>
 
 <script src="villa-ai-agent-testing-harness.js"></script>
-
 </body>
 </html>
