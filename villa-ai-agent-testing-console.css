@@ -339,3 +339,30 @@ hr.sep{
   background: var(--stroke-2);
   margin: 14px 0;
 }
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+}
+
+.status {
+  grid-column: 1 / -1;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  font-family: monospace;
+  opacity: 0.8;
+}
