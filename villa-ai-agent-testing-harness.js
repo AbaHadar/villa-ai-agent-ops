@@ -162,9 +162,12 @@ $("runBtn").onclick = run;
 $("stopBtn").onclick = stop;
 $("clearBtn").onclick = clearAll;
 
-document.querySelector(".collapsible").addEventListener("click", ()=>{
-  const raw = document.getElementById("rawOut");
-  raw.classList.toggle("collapsed");
-});
+const collapsible = document.querySelector(".collapsible");
+if (collapsible) {
+  collapsible.addEventListener("click", () => {
+    const raw = document.getElementById("rawOut");
+    if (raw) raw.classList.toggle("collapsed");
+  });
+}
 
 })();
