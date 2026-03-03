@@ -47,7 +47,7 @@
 
   function appendRaw(line) {
     state.rawLines.push(line);
-    if (state.rawLines.length > 600) state.rawLines.shift();
+    if (state.rawLines.length > 800) state.rawLines.shift();
     if (els.rawOut) els.rawOut.textContent = state.rawLines.join("\n");
   }
 
@@ -115,7 +115,6 @@
 
   /**
    * stop({ keepStatus: true }) will NOT overwrite the current status text.
-   * This prevents "Done" from being immediately replaced by "Stopped".
    */
   function stop(opts = {}) {
     if (state.controller) {
@@ -157,6 +156,7 @@
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ question }),
         signal: state.controller.signal,
+        cache: "no-store",
       });
 
       if (!res.ok) {
@@ -183,15 +183,16 @@
       const reader = res.body.getReader();
       const decoder = new TextDecoder("utf-8");
 
-      let buffer = "";
+      // Robust SSE parsing (handles \n and \r\n)
+      let textBuf = "";
       let currentEvent = "";
-      let currentData = "";
+      let currentDataLines = [];
 
       const flushEvent = () => {
         if (!currentEvent) return;
 
         const eventName = currentEvent.trim();
-        const dataStr = currentData.trim();
+        const dataStr = currentDataLines.join("\n").trim();
 
         appendRaw(`event: ${eventName}`);
         appendRaw(`data: ${dataStr}`);
@@ -231,37 +232,49 @@
         if (eventName === "error") {
           const msg = payload?.message ? String(payload.message) : "Server error";
           setStatus(`Server error: ${msg}`);
-          // Do NOT force stop here; some implementations still send done after error.
         }
 
         if (eventName === "done") {
           setStatus("Done");
-          stop({ keepStatus: true }); // <- critical fix
+          stop({ keepStatus: true });
         }
 
         currentEvent = "";
-        currentData = "";
+        currentDataLines = [];
       };
 
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
 
-        buffer += decoder.decode(value, { stream: true });
+        textBuf += decoder.decode(value, { stream: true });
 
-        // SSE frames are separated by blank line
-        let idx;
-        while ((idx = buffer.indexOf("\n\n")) !== -1) {
-          const frame = buffer.slice(0, idx);
-          buffer = buffer.slice(idx + 2);
+        // Process complete lines; keep partial line in buffer
+        let lineEnd;
+        while ((lineEnd = textBuf.indexOf("\n")) !== -1) {
+          let line = textBuf.slice(0, lineEnd);
+          textBuf = textBuf.slice(lineEnd + 1);
 
-          const lines = frame.split("\n");
-          for (const line of lines) {
-            const l = line.replace(/\r$/, "");
-            if (l.startsWith("event:")) currentEvent = l.slice(6).trim();
-            else if (l.startsWith("data:")) currentData += (currentData ? "\n" : "") + l.slice(5).trim();
+          // Strip trailing CR for \r\n
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+
+          // Blank line means dispatch current event
+          if (line === "") {
+            flushEvent();
+            continue;
           }
-          flushEvent();
+
+          if (line.startsWith("event:")) {
+            currentEvent = line.slice(6).trim();
+            continue;
+          }
+
+          if (line.startsWith("data:")) {
+            currentDataLines.push(line.slice(5).trim());
+            continue;
+          }
+
+          // Ignore other SSE fields (id:, retry:, etc.)
         }
       }
 
@@ -271,7 +284,7 @@
         stop({ keepStatus: true });
       }
     } catch (err) {
-      appendRaw(String(err?.message || err));
+      appendRaw(`Fetch threw: ${String(err?.message || err)}`);
       setStatus("Fetch error");
       stop({ keepStatus: true });
     }
