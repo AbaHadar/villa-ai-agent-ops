@@ -1,0 +1,29 @@
+[
+  {
+    "id": "beach_journey",
+    "name": "Beach day journey",
+    "steps": [
+      "How far is the closest beach from the villa?",
+      "Can I walk there from the villa?",
+      "Can the concierge set up chairs, drinks, and a beach massage?"
+    ]
+  },
+  {
+    "id": "vip_transport",
+    "name": "VIP transport + golf carts",
+    "steps": [
+      "Do you have golf carts on property?",
+      "Can you arrange a ride to a private tropical beach?",
+      "Can you help us plan a full beach day setup?"
+    ]
+  },
+  {
+    "id": "booking_journey",
+    "name": "Booking journey",
+    "steps": [
+      "What are your rates or availability?",
+      "What about May 13\u2013May 23?",
+      "Can you help us book and coordinate special requests?"
+    ]
+  }
+]

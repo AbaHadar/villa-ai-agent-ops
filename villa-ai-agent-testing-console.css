@@ -478,3 +478,156 @@ button[onclick*="runs"] {
     gap: 8px 10px;
   }
 }
+/* =========================================================
+   OPS EVAL PANEL (Golden Runner + Simulator)
+   Add to END of villa-ai-agent-testing-console.css
+   ========================================================= */
+
+.btn.btn--util{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--stroke);
+  background: rgba(12,16,22,.72);
+  color: var(--text);
+  font-weight: 650;
+  letter-spacing: .25px;
+}
+.btn.btn--util:hover{
+  border-color: rgba(134,240,255,.35);
+  filter: brightness(1.05);
+}
+
+.vv-eval{
+  margin-top: 14px;
+  display:none;
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-xl);
+  background: rgba(11,15,20,.86);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.vv-eval.is-open{ display:block; }
+
+.vv-eval__head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--stroke-2);
+  background: linear-gradient(180deg, rgba(134,240,255,.06), rgba(0,0,0,0));
+}
+.vv-eval__title{
+  font-weight: 750;
+  letter-spacing: .35px;
+}
+.vv-eval__tabs{
+  display:flex;
+  gap:10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--stroke-2);
+}
+.vv-tab{
+  appearance:none;
+  border: 1px solid var(--stroke);
+  background: rgba(12,16,22,.55);
+  color: var(--muted);
+  padding: 10px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor:pointer;
+}
+.vv-tab.is-active{
+  color: var(--text);
+  border-color: rgba(134,240,255,.35);
+  background: rgba(134,240,255,.08);
+}
+
+.vv-eval__body{ padding: 14px 16px 18px; }
+.vv-eval__hint{
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.vv-eval__controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom: 12px;
+}
+.vv-label{
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+.vv-select{
+  background: rgba(12,16,22,.70);
+  color: var(--text);
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.vv-eval__out{
+  border: 1px solid var(--stroke-2);
+  border-radius: var(--radius-lg);
+  background: rgba(8,10,14,.55);
+  padding: 12px;
+  min-height: 80px;
+}
+
+.vv-kpis{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom: 12px;
+}
+.vv-kpi{
+  border: 1px solid var(--stroke-2);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: rgba(12,16,22,.55);
+  min-width: 110px;
+}
+.vv-kpi .k{ color: var(--muted); font-size: 12px; }
+.vv-kpi .v{ color: var(--text); font-size: 18px; font-weight: 800; margin-top: 4px; }
+
+.vv-table-wrap{ overflow:auto; }
+.vv-table{
+  width:100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.vv-table th, .vv-table td{
+  padding: 10px 10px;
+  border-bottom: 1px solid var(--stroke-2);
+  vertical-align: top;
+}
+.vv-table th{
+  color: var(--muted);
+  font-weight: 750;
+  text-align:left;
+}
+.vv-table tr.is-pass td{ color: rgba(162,255,210,.92); }
+.vv-table tr.is-fail td{ color: rgba(255,107,107,.92); }
+.mono{ font-family: var(--mono); }
+
+.vv-transcript{ display:flex; flex-direction:column; gap:10px; }
+.vv-turn{
+  border: 1px solid var(--stroke-2);
+  border-radius: 16px;
+  background: rgba(12,16,22,.50);
+  padding: 10px 12px;
+}
+.vv-turn__role{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: .25px;
+  margin-bottom: 6px;
+}
+.vv-turn__text{
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.35;
+}
