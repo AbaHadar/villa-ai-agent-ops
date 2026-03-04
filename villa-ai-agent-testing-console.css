@@ -366,3 +366,115 @@ hr.sep{
   font-family: monospace;
   opacity: 0.8;
 }
+/* =========================================================
+   OPS CONSOLE — REAL CONTROL PANEL FEEL (NO HTML CHANGES)
+   Paste at END of villa-ai-agent-testing-console.css
+   ========================================================= */
+
+/* --- Layout: treat the top control area like an ops toolbar --- */
+#controls,
+.controls,
+.controls-panel,
+.top-controls,
+.toolbar,
+header,
+#top,
+#topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+
+/* If your buttons live inside the first form/row, this helps too */
+form,
+#controls form,
+.controls form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+
+/* --- Button styling: modern glass, but NOT aggressive ---
+   We only style "plain" buttons so your existing Run/Stop/Clear
+   (which already look good) should remain dominant. */
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform .08s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+
+/* "Secondary / utility" feel for extra buttons */
+button:not(.primary):not(.cta):not(.run):not(.stop):not(.clear) {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(235,245,255,0.92);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Hover/active */
+button:not(.primary):not(.cta):not(.run):not(.stop):not(.clear):hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.28);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Disabled */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- Make the primary run button feel "primary" even if styles are minimal --- */
+#run, button#run {
+  box-shadow:
+    0 14px 34px rgba(0,0,0,0.34),
+    0 0 0 1px rgba(135,206,235,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+/* --- Make tool buttons cluster nicer if they wrap to a second line --- */
+button[onclick*="export"],
+button[onclick*="Export"],
+button[onclick*="copy"],
+button[onclick*="Copy"],
+button[onclick*="suite"],
+button[onclick*="Suite"],
+button[onclick*="Runs"],
+button[onclick*="runs"] {
+  margin-top: 2px;
+}
+
+/* --- Optional: tighter look on mobile --- */
+@media (max-width: 520px) {
+  button {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+  #controls,
+  .controls,
+  .controls-panel,
+  .top-controls,
+  .toolbar,
+  header,
+  #top,
+  #topbar,
+  form {
+    gap: 8px 10px;
+  }
+}
