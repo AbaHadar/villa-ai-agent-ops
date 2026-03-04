@@ -117,7 +117,8 @@
    * stop({ keepStatus: true }) will NOT overwrite the current status text.
    */
   function stop(opts = {}) {
-    if (state.controller) {
+    const noAbort = !!opts.noAbort;
+    if (state.controller && !noAbort) {
       try {
         state.controller.abort();
       } catch {}
@@ -236,7 +237,8 @@
 
         if (eventName === "done") {
           setStatus("Done");
-          stop({ keepStatus: true });
+          // Important: do NOT abort the fetch on normal completion (prevents false "Fetch error").
+          stop({ keepStatus: true, noAbort: true });
         }
 
         currentEvent = "";
@@ -284,9 +286,19 @@
         stop({ keepStatus: true });
       }
     } catch (err) {
-      appendRaw(`Fetch threw: ${String(err?.message || err)}`);
+      const name = err?.name || "";
+      const msg = String(err?.message || err);
+
+      // Abort is expected when the user clicks Stop; do not show it as a fetch error.
+      if (name === "AbortError") {
+        appendRaw("Fetch aborted.");
+        stop({ keepStatus: true, noAbort: true });
+        return;
+      }
+
+      appendRaw(`Fetch threw: ${msg}`);
       setStatus("Fetch error");
-      stop({ keepStatus: true });
+      stop({ keepStatus: true, noAbort: true });
     }
   }
 
