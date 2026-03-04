@@ -1,0 +1,29 @@
+[
+  {
+    "id": "golf_carts",
+    "prompt": "Do you have golf carts on property?",
+    "expect": [
+      "golf cart",
+      "villa",
+      "guest"
+    ]
+  },
+  {
+    "id": "beach_distance",
+    "prompt": "How far is the beach from the villa?",
+    "expect": [
+      "800",
+      "walk",
+      "beach"
+    ]
+  },
+  {
+    "id": "booking_rates",
+    "prompt": "What are your rates or availability?",
+    "expect": [
+      "rates",
+      "availability",
+      "book"
+    ]
+  }
+]
